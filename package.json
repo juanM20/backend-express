@@ -1,0 +1,40 @@
+{
+  "name": "backend-express",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanM20/backend-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juanM20/backend-express/issues"
+  },
+  "homepage": "https://github.com/juanM20/backend-express#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.11",
+    "pg": "^8.16.3",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.1.0",
+    "@types/pg": "^8.16.0",
+    "@types/uuid": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
