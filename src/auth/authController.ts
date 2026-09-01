@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { query } from '../database/database.js';
+import { prisma } from '../../lib/prisma';
 
 const SECRET_KEY = process.env.JWT_SECRET || '';
 
@@ -18,24 +18,24 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-        const result = await query('SELECT * FROM users WHERE email = $1', [email]);
+        const user = await prisma.users.findFirst({
+            where: { email },
+        });
 
-        if (result.rows.length === 0) {
+        if (!user) {
             res.status(401).json({ error: 'Invalid credentials' });
             return;
         }
 
-        const user = result.rows[0];
-
-        if(user.password !== password) {
+        if (user.password !== password) {
             res.status(401).json({ error: 'Invalid credentials' });
             return;
-        }  
+        }
 
         const token = jwt.sign({ userId: user.id, email: user.email }, SECRET_KEY, { expiresIn: '1h' });
-        res.json({ 
+        res.json({
             message: 'Login successful',
-            token: token,
+            token,
             userId: { id: user.id, name: user.name, email: user.email }
         });
         console.log('User logged in:', user.email);
@@ -43,4 +43,4 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         console.error('Error during login:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-}
+};
